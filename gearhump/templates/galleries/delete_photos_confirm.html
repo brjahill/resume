@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Delete photos</h2>
+
+<p>You are about to delete {{ num_photos }} photo{{ num_photos|pluralize }}. 
+Are you sure?</p>
+
+<p>
+<form method="post" action="{% url galleries:do_delete_photos gallery.id %}">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Delete" />
+</form>
+</p>
+{% endblock %}

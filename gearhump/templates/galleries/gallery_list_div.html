@@ -1,0 +1,37 @@
+{% if gallery_list %}
+<div class="gallery_list">
+{% for gallery in gallery_list %}
+<p>
+<a class="title" href="{% url galleries:detail gallery.id %}">
+<img src="{{ MEDIA_URL }}{{ gallery.first_photo.thumb }}" />
+<big>{{ gallery.name }}</big></a>
+<br />
+<small>
+posted {{ gallery.created|timesince }} ago
+{% if show_poster %}
+by <a href="{% url users:profile gallery.member.username %}">
+{{ gallery.member.username }}
+</a>
+{% endif %}
+<br />
+{{ gallery.num_comments }} comment{{ gallery.num_comments|pluralize }}
+ - {{ gallery.num_favorites }} favorite{{ gallery.num_favorites|pluralize }}
+</small>
+</p>
+{% endfor %}
+
+{% if page_obj.has_other_pages %}
+<div>
+More:
+{% if page_obj.has_previous %}
+<a href="?page={{ page_obj.previous_page_number }}">prev</a>
+{% endif %}
+
+{% if page_obj.has_next %}
+<a href="?page={{ page_obj.next_page_number }}">next</a>
+{% endif %}
+</div>
+{% endif %}
+{% else %}
+<p>None found.</p>
+{% endif %}

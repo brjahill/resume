@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ gallery.name }}</h2>
+
+{% if user.is_authenticated %}
+<p>
+{% if favorited %}
+<form method="post" action="{% url galleries:unfavorite gallery.id %}">
+{% csrf_token %}
+<input type="submit" value="Remove from favorites" />
+</form>
+{% else %}
+<form method="post" action="{% url galleries:favorite gallery.id %}">
+{% csrf_token %}
+<input type="submit" value="Add to favorites" />
+</form>
+{% endif %}
+</p>
+{% endif %}
+
+{% if is_owner %}
+<div class="navbar">
+<a class="first" href="{% url galleries:edit gallery.id %}">Edit info</a><a href="{% url galleries:upload gallery.id %}">Add photos</a><a href="{% url galleries:delete_photos gallery.id %}">Delete photos</a><a class="last" href="{% url galleries:delete gallery.id %}">Delete gallery</a>
+</div>
+{% endif %}
+
+{% if images %}
+<p><a href="{{ MEDIA_URL }}{{ curr_img.orig }}">
+<img src="{{ MEDIA_URL }}{{ curr_img.slide }}"></a></p>
+
+<p>
+{% for img in images %}
+<a href="{% url galleries:detail_photo gallery.id img.id %}">
+<img src="{{ MEDIA_URL }}{{ img.thumb }}">
+</a>
+{% endfor %}
+</p>
+{% else %}
+    <p>
+    {% if is_owner %}
+    You haven't uploaded any photos yet.
+    <a href="{% url galleries:upload gallery.id %}">Upload some!</a>
+    {% else %}
+    There aren't any photos for this gallery yet.
+    {% endif %}
+    </p>
+{% endif %}
+<p>
+<a href="{% url users:profile gallery.member.username %}">{{ gallery.member.username }}</a>
+<small>{{ gallery.created|timesince }} ago</small>
+</p>
+{{ gallery.description|linebreaks }}
+
+<h3>Comments</h3>
+
+<p>
+{% if user.is_authenticated %}
+<form method="post" action="{% url galleries:new_comment gallery.id %}">
+{% csrf_token %}
+{{ comment_form.as_p }}
+<input type="submit" value="Add" />
+</form>
+{% else %}
+You must be logged in to post comments.
+<a href="{% url users:login %}">Login</a>
+{% endif %}
+
+</p>
+{% for comment in gallery.comments %}
+<p><a href="{% url users:profile comment.member.username %}">
+{{ comment.member.username }}</a>
+<small>{{ comment.created|timesince }} ago</small></p>
+{{ comment.body|linebreaks }}
+{% ifequal user.get_profile comment.member %}
+<p>
+<form method="post" action="{% url galleries:delete_comment gallery.id comment.id %}">
+{% csrf_token %}
+<input type="submit" value="Delete" />
+</form>
+</p>
+{% endifequal %}
+{% empty %}
+
+{% endfor %}
+
+{% endblock %}

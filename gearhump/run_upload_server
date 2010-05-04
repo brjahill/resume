@@ -1,0 +1,3 @@
+#!/bin/bash
+
+node upload_server/upload_server.js

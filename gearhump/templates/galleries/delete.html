@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Delete gallery</h2>
+
+<p>You are about to remove '{{ gallery.name }}' and all its photos. 
+Are you sure?</p>
+
+<p>
+<form method="post" action="">
+{% csrf_token %}
+<input type="submit" value="Delete" />
+</form>
+</p>
+{% endblock %}

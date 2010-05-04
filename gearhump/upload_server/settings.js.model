@@ -1,0 +1,37 @@
+////
+// Local settings
+////
+
+exports.debug = true;
+
+exports.cache_path = ""; // full path to upload cache
+exports.port = 9000;
+exports.gearhump_host = "localhost";
+exports.gearhump_port = 8000;
+
+// Fake S3
+exports.s3_access = "fake";
+exports.s3_secret = "fake";
+exports.s3_host = exports.gearhump_host;
+exports.s3_port = exports.gearhump_port;
+exports.s3_bucket = "fakes3";
+
+// Real S3
+//exports.s3_access = "";
+//exports.s3_secret = "";
+//exports.s3_host = "s3.amazonaws.com";
+//exports.s3_port = 80;
+//exports.s3_bucket = "";
+
+////
+// Options
+////
+exports.cache_clean_interval_mins = 5
+exports.cache_clean_cutoff_mins = 2
+
+////
+// Constants
+////
+exports.max_slide_width = 600;
+exports.thumb_width = 75;
+exports.s3_prefix = "user_images/";

@@ -1,0 +1,77 @@
+from os import path
+PROJECT_ROOT = path.dirname(path.dirname(path.abspath(__file__)))
+
+###
+# Local settings
+###
+
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
+PHOTO_UPLOAD_URL = 'http://localhost:9000/'
+
+# Local media
+FAKE_S3 = True
+MEDIA_ROOT = PROJECT_ROOT + '/fakes3_root'
+MEDIA_URL = '/fakes3/'
+
+# S3 media
+#FAKE_S3 = False
+#S3_BUCKET = ''
+#MEDIA_URL = 'http://s3.amazonaws.com/' + S3_BUCKET + '/'
+#AWS_ACCESS = ''
+#AWS_SECRET = ''
+
+DATABASES = {
+  'default': {
+    'NAME': PROJECT_ROOT + '/gearhump.db',
+    'ENGINE': 'django.db.backends.sqlite3',
+  }
+}
+
+ADMINS = ()
+MANAGERS = ADMINS
+
+###
+# Constants
+###
+
+GALLERIES_PER_PAGE = 25
+
+SECRET_KEY = 'oy5gfj)@3_d$g3$r(e4ldci8)p8b30a$+wzx6blrjp35b9$*g)'
+SITE_ID = 1
+LANGUAGE_CODE = 'en-us'
+USE_I18N = False
+TIME_ZONE = 'America/Los_Angeles'
+LOGIN_REDIRECT_URL = '/'
+AUTH_PROFILE_MODULE = 'users.Member'
+
+TEMPLATE_LOADERS = (
+  'django.template.loaders.filesystem.load_template_source',
+  'django.template.loaders.app_directories.load_template_source',
+)
+
+MIDDLEWARE_CLASSES = (
+  'django.middleware.common.CommonMiddleware',
+  'django.middleware.csrf.CsrfViewMiddleware',
+  'django.contrib.sessions.middleware.SessionMiddleware',
+  'django.contrib.auth.middleware.AuthenticationMiddleware',
+)
+
+ROOT_URLCONF = 'gearhump.urls'
+
+TEMPLATE_DIRS = (
+  PROJECT_ROOT + '/templates'
+)
+
+INSTALLED_APPS = (
+  'django.contrib.auth',
+  'django.contrib.contenttypes',
+  'django.contrib.sessions',
+  'django.contrib.sites',
+  'gearhump.galleries',
+  'gearhump.users',
+)
+
+if FAKE_S3:
+  INSTALLED_APPS += ('gearhump.fakes3',)

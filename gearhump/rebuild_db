@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rm gearhump.db
+python gearhump/manage.py syncdb --noinput

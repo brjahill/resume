@@ -1,0 +1,25 @@
+body { font-family: Arial, Arial, Helvetica, sans-serif;
+       font-size: 100%; }
+textarea { font-family: Arial, Arial, Helvetica, sans-serif; }
+input { font-size: 100%; }
+a { color: #03a; text-decoration: none; }
+a:hover { text-decoration: underline; }
+img { border: none; }
+
+#page { margin: 0 auto; width: 600px; }
+
+#header { float: left; line-height: 5em; width: 100%; }
+#header h1 { margin: 0; float: left; }
+#header_nav { text-align: right; }
+
+#content { clear: both; }
+#content th { padding-top: .25em; text-align: right; vertical-align: top;
+              font-weight: normal; }
+#content td { vertical-align: top; padding-bottom: 1em; }
+
+.navbar a { padding: 0 .75em; border-right: 1px solid #ccc; }
+.navbar a.first { padding-left: 0; }
+.navbar a.last { padding-right: 0; border: none; }
+
+.gallery_list img { float: left; padding-right: .5em; }
+.gallery_list p { margin: .5em 0; float: left; width: 100%; clear: both; }

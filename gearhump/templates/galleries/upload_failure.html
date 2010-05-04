@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Problem adding photos</h2>
+<p>There was an error adding your photos.
+<a href="{% url galleries:upload gallery.id %}">Try again.</a></p>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<script type="text/javascript">
+var last_file_index = 5;
+
+function addFile() {
+  last_file_index++;
+  var new_div = $("#first_file").clone();
+  new_div.removeAttr("id");
+  new_div.children("input").attr("name", "file" + last_file_index);
+  new_div.children("input").attr("value", "");
+  $("#upload_button_p").before(new_div);
+}
+
+function submit() {
+  var image_found = false;
+  $("#upload_form").find("input[type='file']").each(function () {
+      if (this.value != "") {
+        image_found = true;
+        return false;
+      }
+    });
+  if (!image_found) {
+    $("#upload_button").after('<p id="msg">Browse for some photos first.</p>');
+    $("#msg").delay(1000).fadeOut(600);
+  }
+  else {
+    $("#upload_form").find("input[type='file']").each(function () {
+        if (this.value == "") {
+          $(this).remove();
+        }
+      });
+    $("#upload_form").submit();
+  }
+}
+
+$(document).ready(function() {
+    $("#add_file_link").click(addFile);
+    $("#upload_button").click(submit);
+  });
+</script>
+{% endblock %}
+
+{% block content %}
+<h2>Upload photos</h2>
+
+<p>Choose photos to be added to your gallery. Click 'Add another file' if you
+need more fields.</p>
+
+<p><a id="add_file_link" href="#">Add another file</a></p>
+
+<p>
+<form id="upload_form" method="post" action="{{ upload_url }}"
+  enctype="multipart/form-data">
+<input type="hidden" name="gallery_id" value="{{ gallery.id }}" />
+<input type="hidden" name="upload_key" value="{{ upload_key }}" />
+<div id="first_file"><input size="60" type="file" name="file0" /></div>
+<div><input size="60" type="file" name="file1" /></div>
+<div><input size="60" type="file" name="file2" /></div>
+<div><input size="60" type="file" name="file3" /></div>
+<div><input size="60" type="file" name="file4" /></div>
+<div><input size="60" type="file" name="file5" /></div>
+<p id="upload_button_p"></p>
+</form><button id="upload_button">Add photos</button>
+</p>
+{% endblock %}

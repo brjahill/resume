@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ member.username }}</h2>
+
+<h3>Galleries</h3>
+{% with member.galleries_preview as gallery_list %}
+{% include 'galleries/gallery_list_div.html' %}
+{% if gallery_list %}
+<p><a href="{% url users:gallery_list member.username %}">More..</a></p>
+{% endif %}
+{% endwith %}
+
+<h3>Favorites</h3>
+{% with member.favorites_preview as gallery_list %}
+{% include 'galleries/gallery_list_div.html' %}
+{% if gallery_list %}
+<p><a href="{% url users:favorite_list member.username %}">More..</a></p>
+{% endif %}
+{% endwith %}
+
+{% endblock %}

@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>gearhump</title>
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.4.2.min.js">
+</script> 
+{% block head %}{% endblock %}
+</head>
+<body>
+<div id="page">
+
+<div id="header">
+<h1><a href="{% url galleries:home %}">gearhump</a></h1>
+<div id="header_nav" class="navbar">
+{% if user.is_authenticated %}
+<a href="{% url users:profile user.username %}">{{ user.username }}</a><a class="last" href="{% url users:logout %}">Logout</a>
+{% else %}
+<a href="{% url users:login %}">Login</a><a class="last" href="{% url users:signup %}">Sign up</a>
+{% endif %}
+</div>
+</div>
+
+<div class="navbar">
+<a class="first" href="{% url galleries:home %}">Home</a><a href="{% url galleries:recent %}">Recent</a><a {% if not user.is_authenticated %}class="last" {% endif %}href="{% url galleries:top %}">Top favorites</a>{% if user.is_authenticated %}<a href="{% url users:favorite_list user.username %}">My favorites</a><a href="{% url users:gallery_list user.username %}">My galleries</a><a class="last" href="{% url galleries:new %}">New gallery</a>{% endif %}
+</div>
+
+<div id="content">
+{% block content %}{% endblock %}
+</div>
+
+</div>
+</body>
+</html>
